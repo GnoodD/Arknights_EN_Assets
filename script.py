@@ -29,9 +29,33 @@ subprocess.run(["git", "fetch", "--depth=1", "origin", f"{branch}:{branch}"], ch
 subprocess.run(["git", "checkout", branch], check=True)
 
 # prepare network config
-network_config_signed = """{"sign":"dz7AJFkSLMLgKcyPKYtUCqSsPbCO39tmpqgRxptIOZNtQ3H+GxJg12YE90cc6KOT5KFeb2h5jhxh5iKBkwPDv5/TsYuTEHtF5BvpWhqr5NbWZ6M1EzpvANtRy0+DfGxOp51IR/uRa15aQ9APns6cvqEOVzfbNMHXISV5DKBB/pE=","content":"{\"configVer\":\"1\",\"funcVer\":\"V056\",\"configs\":{\"V056\":{\"override\":true,\"network\":{\"gs\":\"https://gs.arknights.global:8443\",\"as\":\"https://as.arknights.global\",\"u8\":\"https://as.arknights.global/u8\",\"hu\":\"https://ark-us-static-online.yo-star.com/assetbundle/official\",\"hv\":\"https://ark-us-static-online.yo-star.com/assetbundle/official/{0}/version\",\"rc\":\"https://ak-conf.arknights.global/config/prod/official/remote_config\",\"an\":\"https://ark-us-static-online.yo-star.com/announce/{0}/announcement.meta.json\",\"prean\":\"https://ark-us-static-online.yo-star.com/announce/{0}/preannouncement.meta.json\",\"sl\":\"https://www.arknights.global/terms_of_service\",\"of\":\"https://www.arknights.global\",\"pkgAd\":\"https://play.google.com/store/apps/details?id=com.YoStarEN.Arknights\",\"pkgIOS\":\"https://apps.apple.com/us/app/id1464872022?mt=8\",\"secure\":false}},\"V058\":{\"override\":false}}}"}"""
-data = json.loads(network_config_signed)
-network_config = json.loads(data["content"])
+network_config = {
+    "configVer": "1",
+    "funcVer": "V056",
+    "configs": {
+        "V056": {
+            "override": True,
+            "network": {
+                "gs": "https://gs.arknights.global:8443",
+                "as": "https://as.arknights.global",
+                "u8": "https://as.arknights.global/u8",
+                "hu": "https://ark-us-static-online.yo-star.com/assetbundle/official",
+                "hv": "https://ark-us-static-online.yo-star.com/assetbundle/official/{0}/version",
+                "rc": "https://ak-conf.arknights.global/config/prod/official/remote_config",
+                "an": "https://ark-us-static-online.yo-star.com/announce/{0}/announcement.meta.json",
+                "prean": "https://ark-us-static-online.yo-star.com/announce/{0}/preannouncement.meta.json",
+                "sl": "https://www.arknights.global/terms_of_service",
+                "of": "https://www.arknights.global",
+                "pkgAd": "https://play.google.com/store/apps/details?id=com.YoStarEN.Arknights",
+                "pkgIOS": "https://apps.apple.com/us/app/id1464872022?mt=8",
+                "secure": False
+            }
+        },
+        "V058": {
+            "override": False
+        }
+    }
+}
 network_urls = network_config["configs"][network_config["funcVer"]]["network"]
 version_url = network_urls["hv"].replace("{0}", "Android")
 res_version = requests.get(version_url).json()["resVersion"]
