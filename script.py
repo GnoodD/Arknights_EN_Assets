@@ -142,7 +142,7 @@ while to_update_index < len(to_update):
                     "-g",
                     "containerFull",
                     "-t",
-                    "Sprite,AkPortraitSprite,AudioClip,TextAsset",
+                    "Sprite,AkPortraitSprite,AudioClip,TextAsset,Texture2D",
                     "--log-level",
                     "warning",
                     "-o",
