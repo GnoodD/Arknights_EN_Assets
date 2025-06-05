@@ -21,7 +21,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("filter", nargs="?", choices=["art", "audio"], default="art")
 parser.add_argument("--force", action="store_true")
 args = parser.parse_args()
-name_filter: typing.Callable[[str], bool] = (lambda i: "audio" in i) if args.filter == "audio" else (lambda i: "audio" not in i)
+# name_filter: typing.Callable[[str], bool] = (lambda i: "audio" in i) if args.filter == "audio" else (lambda i: "audio" not in i)
+name_filter: typing.Callable[[str], bool] = (lambda i: "audio" in i) if args.filter == "audio" else (lambda i: "audio" not in i and "charpack" in i)
 branch = "cn" if args.filter == "art" else "voice"
 
 # checkout the actual asset branch
