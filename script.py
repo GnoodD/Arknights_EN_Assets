@@ -201,6 +201,11 @@ while to_update_index < len(to_update):
     # push segment to git
     print("Pushing to git")
     sys.stdout.flush()
+    
+    if not os.path.exists('assets'):
+        os.makedirs('assets')
+        print("📁 Tạo thư mục 'assets' mới ở thư mục root.")
+    
     subprocess.run(["git", "add", "assets"], check=True)
     if not subprocess.check_output(["git", "diff", "--cached", "--name-only", "assets"]).strip():
         continue
