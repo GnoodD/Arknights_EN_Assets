@@ -34,7 +34,7 @@ network_config = {
     "funcVer": "V058",
     "configs": {
         "V058": {
-            "override": true,
+            "override": True,
             "network": {
                 "gs": "https://gs.arknights.global:8443",
                 "as": "https://as.arknights.global",
