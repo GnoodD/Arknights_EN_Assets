@@ -48,7 +48,7 @@ network_config = {
                 "of": "https://www.arknights.global",
                 "pkgAd": "https://play.google.com/store/apps/details?id=com.YoStarEN.Arknights",
                 "pkgIOS": "https://apps.apple.com/us/app/id1464872022?mt=8",
-                "secure": false
+                "secure": False
             }
         }
     }
