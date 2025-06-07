@@ -21,8 +21,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("filter", nargs="?", choices=["art", "audio"], default="art")
 parser.add_argument("--force", action="store_true")
 args = parser.parse_args()
-# name_filter: typing.Callable[[str], bool] = (lambda i: "audio" in i) if args.filter == "audio" else (lambda i: "audio" not in i)
-name_filter: typing.Callable[[str], bool] = (lambda i: "audio" in i) if args.filter == "audio" else (lambda i: "audio" not in i and "charpack" in i)
+name_filter: typing.Callable[[str], bool] = (lambda i: "audio" in i) if args.filter == "audio" else (lambda i: "audio" not in i  and "charpack" in i)
 branch = "cn" if args.filter == "art" else "voice"
 
 # checkout the actual asset branch
@@ -32,10 +31,10 @@ subprocess.run(["git", "checkout", branch], check=True)
 # prepare network config
 network_config = {
     "configVer": "1",
-    "funcVer": "V056",
+    "funcVer": "V058",
     "configs": {
-        "V056": {
-            "override": True,
+        "V058": {
+            "override": true,
             "network": {
                 "gs": "https://gs.arknights.global:8443",
                 "as": "https://as.arknights.global",
@@ -44,19 +43,17 @@ network_config = {
                 "hv": "https://ark-us-static-online.yo-star.com/assetbundle/official/{0}/version",
                 "rc": "https://ak-conf.arknights.global/config/prod/official/remote_config",
                 "an": "https://ark-us-static-online.yo-star.com/announce/{0}/announcement.meta.json",
-                "prean": "https://ark-us-static-online.yo-star.com/announce/{0}/preannouncement.meta.json",
+                "prean": "https://ak-webview.arknights.global",
                 "sl": "https://www.arknights.global/terms_of_service",
                 "of": "https://www.arknights.global",
                 "pkgAd": "https://play.google.com/store/apps/details?id=com.YoStarEN.Arknights",
                 "pkgIOS": "https://apps.apple.com/us/app/id1464872022?mt=8",
-                "secure": False
+                "secure": false
             }
-        },
-        "V058": {
-            "override": False
         }
     }
 }
+
 network_urls = network_config["configs"][network_config["funcVer"]]["network"]
 version_url = network_urls["hv"].replace("{0}", "Android")
 res_version = requests.get(version_url).json()["resVersion"]
@@ -201,11 +198,6 @@ while to_update_index < len(to_update):
     # push segment to git
     print("Pushing to git")
     sys.stdout.flush()
-    
-    if not os.path.exists('assets'):
-        os.makedirs('assets')
-        print("📁 Tạo thư mục 'assets' mới ở thư mục root.")
-    
     subprocess.run(["git", "add", "assets"], check=True)
     if not subprocess.check_output(["git", "diff", "--cached", "--name-only", "assets"]).strip():
         continue
